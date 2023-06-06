@@ -4,7 +4,7 @@ if (isset($_SESSION['user_detail']) && $_SESSION['user_detail']['is_authenticate
   exit;
 }
 ?>
-<?php require_once "../helpers/helper.php" ?>
+<?php require_once "../database/db_connect.php" ?>
 <?php
 $limit = 6;
 $page_num = 1;

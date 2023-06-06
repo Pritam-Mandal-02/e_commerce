@@ -1,11 +1,13 @@
-<?php require_once "../partials/navbar.php" ?>
+<?php
+$page_name = "Add Product";
+require_once("../partials/navbar.php") ?>
 <?php
 if (!isset($_SESSION['user_detail']) || !$_SESSION['user_detail']['is_authenticated'] || $_SESSION['user_detail']['role'] != 1) {
   header("Location:../home/index.php");
   exit;
 }
 ?>
-<?php require_once "../helpers/helper.php" ?>
+<?php require_once "../database/db_connect.php" ?>
 <?php
 if (isset($_POST['add_product'])) {
   if (!empty($_POST['category_id'])) {
@@ -44,16 +46,6 @@ if (isset($_POST['add_product'])) {
   }
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add Product</title>
-</head>
 
 <body>
   <div class="container">
