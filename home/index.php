@@ -1,12 +1,14 @@
-<?php require_once "../partials/navbar.php" ?>
-<!DOCTYPE html>
-<html lang="en">
+<?php
+$page_name = "Home";
+require_once("../partials/navbar.php") ?>
+<?php
+if (isset($_SESSION['user_detail']) && $_SESSION['user_detail']['is_authenticated'] && $_SESSION['user_detail']['role'] == 1) {
+  header("Location:../product/product_list.php");
+  exit;
+}
+?>
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product List</title>
   <script>
     function handleSearch(pageNum) {
       let name = document.getElementById("search").value;

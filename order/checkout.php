@@ -1,4 +1,6 @@
-<?php require_once "../partials/navbar.php" ?>
+<?php
+$page_name = "Checkout";
+require_once("../partials/navbar.php") ?>
 <?php
 if (!isset($_SESSION['user_detail']) || !$_SESSION['user_detail']['is_authenticated']) {
   header("Location:../home/index.php");
@@ -10,7 +12,7 @@ if (!isset($_SESSION['user_detail']) || !$_SESSION['user_detail']['is_authentica
   $user_id = $_SESSION['user_detail']['user_id'];
 }
 ?>
-<?php require_once "../helpers/helper.php" ?>
+<?php require_once "../database/db_connect.php" ?>
 <?php
 $connection = connect_with_mysql();
 

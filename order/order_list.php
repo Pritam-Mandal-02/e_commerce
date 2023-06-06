@@ -1,4 +1,6 @@
-<?php require_once "../partials/navbar.php" ?>
+<?php
+$page_name = "My Orders";
+require_once("../partials/navbar.php") ?>
 <?php
 if (!isset($_SESSION['user_detail']) || !$_SESSION['user_detail']['is_authenticated']) {
   header("Location:../home/index.php");
@@ -10,7 +12,7 @@ if (!isset($_SESSION['user_detail']) || !$_SESSION['user_detail']['is_authentica
   $user_id = $_SESSION['user_detail']['user_id'];
 }
 ?>
-<?php require_once "../helpers/helper.php" ?>
+<?php require_once "../database/db_connect.php" ?>
 <?php
 $limit = 6;
 $page_num = 1;
@@ -43,19 +45,9 @@ if (!$order_length) {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Order</title>
-</head>
-
 <body>
   <div class="container">
-    <h4>My Order</h4>
+    <h4>My Orders</h4>
     <div class="row">
       <?php
       while ($row = mysqli_fetch_assoc($order_list)) {

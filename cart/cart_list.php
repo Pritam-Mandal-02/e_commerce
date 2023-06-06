@@ -1,4 +1,6 @@
-<?php require_once "../partials/navbar.php" ?>
+<?php
+$page_name = "My Cart";
+require_once("../partials/navbar.php") ?>
 <?php
 if (!isset($_SESSION['user_detail']) || !$_SESSION['user_detail']['is_authenticated']) {
   header("Location:../home/index.php");
@@ -10,7 +12,7 @@ if (!isset($_SESSION['user_detail']) || !$_SESSION['user_detail']['is_authentica
   $user_id = $_SESSION['user_detail']['user_id'];
 }
 ?>
-<?php require_once "../helpers/helper.php" ?>
+<?php require_once "../database/db_connect.php" ?>
 <?php
 $limit = 6;
 $page_num = 1;
@@ -44,17 +46,22 @@ if (!$cart_length) {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Cart</title>
   <script>
+    function handle_clear_cart(user_id) {
+      if (confirm("Are you sure, you want to clear cart?")) {
+        $.ajax({
+          url: `delete_from_cart.php?user_id=${user_id}`,
+          success: function() {
+            location.reload();
+            // $('#result').html(response);
+          }
+        });
+      }
+    }
+
     function handle_destroy(id) {
-      if (confirm("Are you sure?")) {
+      if (confirm("Are you sure, you want to delete this item?")) {
         $.ajax({
           url: `delete_from_cart.php?id=${id}`,
           success: function() {
@@ -100,7 +107,7 @@ if (!$cart_length) {
               <div class="col-md-8">
                 <div class="card-body">
                   <h5 class="card-title">
-                    <button class="btn btn-outline-danger" onclick=" handle_destroy('<?= $row['id'] ?>')">Delete</button>
+                    <i class="fa-solid fa-trash" style="color:red;" onclick=" handle_destroy('<?= $row['id'] ?>')"></i>
                     <?= $row['name'] ?>
                   </h5>
                   <p class="card-text"><?= substr($row['description'], 0, 50) . "..." ?></p>
@@ -138,7 +145,14 @@ if (!$cart_length) {
       <?php } ?>
       <?php
       if ($cart_length->num_rows) { ?>
-        <a class="btn btn-primary" href="../order/checkout.php">Place order</a>
+        <div class="row mb-5">
+          <div class="col">
+            <button class="btn btn-lg btn-warning" style="width:534px;" onclick=" handle_clear_cart('<?= $user_id ?>')">Clear Cart</button>
+          </div>
+          <div class="col">
+            <a class="btn btn-lg btn-primary" style="width:534px;" href="../order/checkout.php">Place order</a>
+          </div>
+        </div>
       <?php } ?>
     </div>
   </div>
