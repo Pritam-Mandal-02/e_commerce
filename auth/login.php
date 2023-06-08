@@ -1,8 +1,8 @@
 <?php
 $page_name = "Login";
 require_once("../partials/navbar.php") ?>
-<?php require_once "../database/db_connect.php" ?>
-<?php require_once "../vendor/autoload.php" ?>
+<?php require_once("../database/db_connect.php") ?>
+<?php require_once("../vendor/autoload.php") ?>
 <?php
 $connection = connect_with_mysql();
 $google_client_id = $_ENV['GOOGLE_CLIENT_ID'];
@@ -127,4 +127,4 @@ if (isset($_POST['submit'])) {
   </div>
 </body>
 
-</html>
+<?php require_once("../partials/footer.php") ?>

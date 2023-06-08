@@ -1,13 +1,10 @@
 <?php
 $page_name = "Add Product";
 require_once("../partials/navbar.php") ?>
-<?php
-if (!isset($_SESSION['user_detail']) || !$_SESSION['user_detail']['is_authenticated'] || $_SESSION['user_detail']['role'] != 1) {
-  header("Location:../home/index.php");
-  exit;
-}
+<?php require_once("../helper.php");
+with_admin();
 ?>
-<?php require_once "../database/db_connect.php" ?>
+<?php require_once("../database/db_connect.php") ?>
 <?php
 if (isset($_POST['add_product'])) {
   if (!empty($_POST['category_id'])) {
@@ -88,4 +85,4 @@ if (isset($_POST['add_product'])) {
   </div>
 </body>
 
-</html>
+<?php require_once("../partials/footer.php") ?>
