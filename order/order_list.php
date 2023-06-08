@@ -1,18 +1,11 @@
 <?php
 $page_name = "My Orders";
 require_once("../partials/navbar.php") ?>
-<?php
-if (!isset($_SESSION['user_detail']) || !$_SESSION['user_detail']['is_authenticated']) {
-  header("Location:../home/index.php");
-  exit;
-} else if (isset($_SESSION['user_detail']) && $_SESSION['user_detail']['is_authenticated'] && $_SESSION['user_detail']['role'] == 1) {
-  header("Location:../product/product_list.php");
-  exit;
-} else {
-  $user_id = $_SESSION['user_detail']['user_id'];
-}
+<?php require_once("../helper.php");
+with_user();
+$user_id = $_SESSION['user_detail']['user_id'];
 ?>
-<?php require_once "../database/db_connect.php" ?>
+<?php require_once("../database/db_connect.php") ?>
 <?php
 $limit = 6;
 $page_num = 1;
@@ -41,9 +34,22 @@ if (!$order_length) {
 
   if (!$order_list) {
     die('Something went wrong' . mysqli_error($connection));
-  }
+  } 
 }
 ?>
+
+<head>
+  <script>
+    function handle_receipt(id) {
+      $.ajax({
+        url: `download_receipt.php?id=${id}`,
+        success: function() {
+          // $('#result').html(response);
+        }
+      });
+    }
+  </script>
+</head>
 
 <body>
   <div class="container">
@@ -62,7 +68,8 @@ if (!$order_length) {
               <div class="col-md-8">
                 <div class="card-body">
                   <h5 class="card-title">
-                    <?= $row['name'] ?>
+                    <i class="fa-solid fa-receipt" style="color:blue" onclick=" handle_receipt('<?= $row['id'] ?>')"></i>
+                    <a href="../home/product_detail.php?id=<?= $row['product_id'] ?>" target="_blank" style="text-decoration:none;color:black;"><?= $row['name'] ?></a>
                   </h5>
                   <p class="card-text"><?= substr($row['description'], 0, 50) . "..." ?></p>
                   <?php if ($row['quantity'] > 1) { ?>
@@ -99,4 +106,4 @@ if (!$order_length) {
   </div>
 </body>
 
-</html>
+<?php require_once("../partials/footer.php") ?>

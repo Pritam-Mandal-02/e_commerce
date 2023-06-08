@@ -1,16 +1,10 @@
 <?php
 $page_name = "Delete from Cart";
 require_once("../partials/navbar.php") ?>
-<?php
-if (!isset($_SESSION['user_detail']) || !$_SESSION['user_detail']['is_authenticated']) {
-  header("Location:../home/index.php");
-  exit;
-} else if (isset($_SESSION['user_detail']) && $_SESSION['user_detail']['is_authenticated'] && $_SESSION['user_detail']['role'] == 1) {
-  header("Location:../product/product_list.php");
-  exit;
-}
+<?php require_once("../helper.php");
+with_user();
 ?>
-<?php require_once "../database/db_connect.php" ?>
+<?php require_once("../database/db_connect.php") ?>
 <?php
 $connection = connect_with_mysql();
 $query_prefix = "DELETE FROM cart ";

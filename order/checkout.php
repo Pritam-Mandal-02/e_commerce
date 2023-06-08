@@ -1,18 +1,11 @@
 <?php
 $page_name = "Checkout";
 require_once("../partials/navbar.php") ?>
-<?php
-if (!isset($_SESSION['user_detail']) || !$_SESSION['user_detail']['is_authenticated']) {
-  header("Location:../home/index.php");
-  exit;
-} else if (isset($_SESSION['user_detail']) && $_SESSION['user_detail']['is_authenticated'] && $_SESSION['user_detail']['role'] == 1) {
-  header("Location:../product/product_list.php");
-  exit;
-} else {
-  $user_id = $_SESSION['user_detail']['user_id'];
-}
+<?php require_once("../helper.php");
+with_user();
+$user_id = $_SESSION['user_detail']['user_id'];
 ?>
-<?php require_once "../database/db_connect.php" ?>
+<?php require_once("../database/db_connect.php") ?>
 <?php
 $connection = connect_with_mysql();
 

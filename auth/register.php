@@ -1,7 +1,7 @@
 <?php
 $page_name = "Register";
 require_once("../partials/navbar.php") ?>
-<?php require_once "../database/db_connect.php" ?>
+<?php require_once("../database/db_connect.php") ?>
 <?php
 if (isset($_POST['register'])) {
   $connection = connect_with_mysql();
@@ -63,4 +63,4 @@ if (isset($_POST['register'])) {
   </div>
 </body>
 
-</html>
+<?php require_once("../partials/footer.php") ?>

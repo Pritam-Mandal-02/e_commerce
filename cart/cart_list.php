@@ -1,18 +1,11 @@
 <?php
 $page_name = "My Cart";
 require_once("../partials/navbar.php") ?>
-<?php
-if (!isset($_SESSION['user_detail']) || !$_SESSION['user_detail']['is_authenticated']) {
-  header("Location:../home/index.php");
-  exit;
-} else if (isset($_SESSION['user_detail']) && $_SESSION['user_detail']['is_authenticated'] && $_SESSION['user_detail']['role'] == 1) {
-  header("Location:../product/product_list.php");
-  exit;
-} else {
-  $user_id = $_SESSION['user_detail']['user_id'];
-}
+<?php require_once("../helper.php");
+with_user();
+$user_id = $_SESSION['user_detail']['user_id'];
 ?>
-<?php require_once "../database/db_connect.php" ?>
+<?php require_once("../database/db_connect.php") ?>
 <?php
 $limit = 6;
 $page_num = 1;
@@ -108,7 +101,7 @@ if (!$cart_length) {
                 <div class="card-body">
                   <h5 class="card-title">
                     <i class="fa-solid fa-trash" style="color:red;" onclick=" handle_destroy('<?= $row['id'] ?>')"></i>
-                    <?= $row['name'] ?>
+                    <a href="../home/product_detail.php?id=<?= $row['product_id'] ?>" target="_blank" style="text-decoration:none;color:black;"><?= $row['name'] ?></a>
                   </h5>
                   <p class="card-text"><?= substr($row['description'], 0, 50) . "..." ?></p>
                   <p class="card-text"><small class="text-body-secondary">₹<?= $row['price'] ?>/-</small></p>
@@ -160,4 +153,4 @@ if (!$cart_length) {
 
 </body>
 
-</html>
+<?php require_once("../partials/footer.php") ?>

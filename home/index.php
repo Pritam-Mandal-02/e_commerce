@@ -1,11 +1,8 @@
 <?php
 $page_name = "Home";
 require_once("../partials/navbar.php") ?>
-<?php
-if (isset($_SESSION['user_detail']) && $_SESSION['user_detail']['is_authenticated'] && $_SESSION['user_detail']['role'] == 1) {
-  header("Location:../product/product_list.php");
-  exit;
-}
+<?php require_once("../helper.php");
+except_admin();
 ?>
 
 <head>
@@ -55,13 +52,13 @@ if (isset($_SESSION['user_detail']) && $_SESSION['user_detail']['is_authenticate
 <body onload="handleFind()">
   <div class="container">
     <div class="row mb-2 mt-1">
-      <div class="col col-sm-2">
+      <div class="col-sm-2">
         <h4>Product List</h4>
       </div>
-      <div class="col col-sm-4">
+      <div class="col-sm-4">
         <input type="search" class="form-control" placeholder="Search" id="search" onchange="handleSearch()">
       </div>
-      <div class="col col-sm-2">
+      <div class="col-sm-2">
         <select class="form-select" id="category" onchange="handleSearch()">
           <option value="category" selected disabled>Category</option>
           <option value="0">All</option>
@@ -70,7 +67,7 @@ if (isset($_SESSION['user_detail']) && $_SESSION['user_detail']['is_authenticate
           <?php } ?>
         </select>
       </div>
-      <div class="col col-sm-2">
+      <div class="col-sm-2">
         <select class="form-select" id="sort" onchange="handleSearch()">
           <option value="sort" selected disabled>Sort</option>
           <option value="id,desc">Default</option>
@@ -80,7 +77,7 @@ if (isset($_SESSION['user_detail']) && $_SESSION['user_detail']['is_authenticate
           <option value="price,desc">High to Low</option>
         </select>
       </div>
-      <div class="col col-sm-2">
+      <div class="col-sm-2">
         <select class="form-select" id="limit" onchange="handleSearch()">
           <option value="limit" selected disabled>Page Limit</option>
           <option value="6">Default</option>
@@ -97,4 +94,4 @@ if (isset($_SESSION['user_detail']) && $_SESSION['user_detail']['is_authenticate
   </div>
 </body>
 
-</html>
+<?php require_once("../partials/footer.php") ?>
